@@ -1,7 +1,10 @@
 version: "3.7"
 
-services:
+networks:
+  mern-stack-net:
+    driver: bridge
 
+services:
   client:
     build:
       context: ./client
@@ -19,13 +22,14 @@ services:
       - server
     stdin_open: true
     tty: true
-
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
+    expose:
+      - "4000"
     ports:
-      - 5000:5000
+      - 4000:4000
     container_name: server
     networks:
       - mern-stack-net
@@ -34,22 +38,33 @@ services:
     command: bash -c "npm run dev"
     depends_on:
       - db
-
   db:
     image: mongo
     ports:
       - 27017:27017
+    expose:
+      - "27017"
     container_name: mongo-db
+    hostname: db
     networks:
       - mern-stack-net
     volumes:
       - mongo-data:/data/db
+  dbclient:
+    image: mongoclient/mongoclient
+    ports:
+      - '3300:3000'
+    container_name: mongo-client
+    hostname: mongoclient
+    depends_on:
+      - db
+    networks:
+      - mern-stack-net
 
-networks:
-  mern-stack-net:
-    driver: bridge
+  
 
 volumes:
   mongo-data:
     external:
       name: mongo_external
+  client-data:

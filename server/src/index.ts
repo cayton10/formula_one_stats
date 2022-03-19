@@ -1,8 +1,8 @@
 import express = require('express');
-const bodyParser = require('body-parser');
+import * as bodyParser from 'body-parser';
+import { connect } from 'mongoose';
 const cors = require('cors');
 
-const db = require('../db/');
 const movieRouter = require('../routes/movie-router');
 
 const app = express();

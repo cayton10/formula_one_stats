@@ -8,4 +8,5 @@ RUN npm install
 
 COPY . .
 EXPOSE 3000
-CMD ["start"]
+ENV NODE_PATH=./build
+RUN npm run build

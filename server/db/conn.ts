@@ -1,4 +1,8 @@
-import * as mongoose from 'mongoose';
+import { connect, ConnectOptions } from 'mongoose';
+
+class MongoConnection implements connect {
+    const mongoose
+}
 
 mongoose
     .connect('mongodb://mongo:27017/cinema')
