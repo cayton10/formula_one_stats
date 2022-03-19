@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm i
 
 COPY . .
-EXPOSE 5000
+EXPOSE 4000
 ENV NODE_PATH=./dist
 RUN npm run build
 

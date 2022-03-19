@@ -1,6 +1,23 @@
-import express from 'express';
+import express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const db = require('../db/');
+const movieRouter = require('../routes/movie-router');
 
 const app = express();
-app.listen(3080, () => {
-    console.log(`server running on port 4000`);
-});
+const apiPort = 4000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(bodyParser.json());
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
+app.get('/', (req: express.Request, res: express.Response) => {
+    alert('Hello World!')
+})
+
+app.use('/api', movieRouter)
+
+app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
