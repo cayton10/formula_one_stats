@@ -1,14 +1,11 @@
-FROM node:14-slim
+FROM node as dev_server
 
-WORKDIR /usr/src/app
-
-COPY ./package.json ./
-COPY ./yarn.lock ./
-
-RUN yarn install
+WORKDIR /usr/app/src
+COPY package*.json ./
+RUN npm i
 
 COPY . .
-
 EXPOSE 5000
+ENV NODE_PATH=./dist
+RUN npm run build
 
-CMD [ "index.js" ]
